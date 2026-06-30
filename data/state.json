@@ -45,6 +45,66 @@
       "category": "agents",
       "title": "CLAUDE COWORK FULL COURSE (2+ Hours)",
       "synthesized_skill_name": "claude-cowork-workflows"
+    },
+    "nnsBDUd8H4w": {
+      "title": "This bug hides in every app! #vibecoding #aicoding #programming",
+      "status": "evaluated",
+      "is_teachable": false,
+      "skill_potential": 1,
+      "category": "other",
+      "evaluation": {
+        "is_teachable_skill": false,
+        "technique_description": "",
+        "skill_potential": 1,
+        "category": "other",
+        "reasoning": "The transcript describes a physical automotive diagnostic and repair process, specifically identifying a vacuum leak using a smoke test and replacing a PCV valve. This is a hands-on task that an AI agent cannot perform directly. The content is a demonstration of a physical skill, not a digital workflow, prompt design, or code pattern for an AI agent."
+      }
+    },
+    "bc4NrE0cOE0": {
+      "title": "How to use Karpathy's Autoresearch to 10x Claude",
+      "status": "evaluated",
+      "is_teachable": false,
+      "skill_potential": 1,
+      "category": "design",
+      "evaluation": {
+        "is_teachable_skill": false,
+        "technique_description": "The transcript describes a physical DIY craft for making slime using shampoo, conditioner, and salt, involving steps like mixing, adding salt, freezing, and repeating until a desired consistency is achieved. An AI agent cannot perform these physical actions.",
+        "skill_potential": 1,
+        "category": "design",
+        "reasoning": "The transcript details a step-by-step guide for a physical DIY craft (making slime). An AI agent cannot physically interact with ingredients, mix them, or use a freezer. Therefore, this content does not provide any actionable technique, method, prompt framework, code pattern, or workflow that an AI agent could perform or execute. The video title is completely mismatched with the transcript content."
+      }
+    },
+    "l5Diqeoffa4": {
+      "title": "The 7 Levels of Using Claude Context Explained in 24 min",
+      "status": "failed_no_transcript"
+    },
+    "HXG-0l_fWls": {
+      "title": "Why RAG Systems Fail in Production (And How to Fix It) #RAG #GenerativeAI #GenAI #AIArchitecture",
+      "status": "failed_no_transcript"
+    },
+    "bXnRA3pJavE": {
+      "title": "8 Claude Skills I Can’t Live Without",
+      "status": "failed_no_transcript"
+    },
+    "BqQ_VH8iWJQ": {
+      "title": "How to Monitor Generative AI Systems in Production (Cost & Quality) #GenerativeAI #GenAI #LLMOps",
+      "status": "failed_no_transcript"
+    },
+    "jxHIw_OA8_I": {
+      "title": "Stop perfecting your prompt. Do this instead",
+      "status": "failed_no_transcript"
+    },
+    "91Nw-3FiHHk": {
+      "title": "You Only Need 5 AI Tools in 2026 (The Ultimate AI Stack Explained). “AI tools 2026”+“best AI tools”",
+      "status": "failed_no_transcript"
+    },
+    "p1ak5NfWuEA": {
+      "title": "Most AI agents are fake (here's a 10-second test)",
+      "status": "failed_no_transcript"
+    },
+    "LLE6oMh7SxE": {
+      "title": "How to Use Claude Routines Better than 99% of People",
+      "status": "failed_no_transcript"
     }
   },
   "saved_skills": {
