@@ -67,28 +67,13 @@ def extract_via_ytdlp(video_id, data_dir):
     return None
 
 def extract_via_gemini(video_id, api_key):
-    """Last resort: Uses Gemini API's native YouTube video understanding to transcribe."""
-    print(f"[{video_id}] Attempting native transcription via Gemini API...")
-    if not api_key:
-        print(f"[{video_id}] Gemini API key missing, skipping Gemini transcription.")
-        return None
-        
-    try:
-        client = genai.Client(api_key=api_key)
-        video_url = f"https://www.youtube.com/watch?v={video_id}"
-        
-        # We prompt the model to transcribe the audio.
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=[
-                video_url,
-                "Provide a word-for-word transcript of the audio in this video."
-            ]
-        )
-        return response.text
-    except Exception as e:
-        print(f"[{video_id}] Gemini native transcription failed: {e}")
-        return None
+    """
+    Direct YouTube URL transcription is only supported in Gemini Enterprise/AI Studio Web UI.
+    Passing a URL string to the Developer API causes the model to hallucinate transcripts.
+    Disabled to prevent hallucination and save API quota.
+    """
+    print(f"[{video_id}] Direct Gemini YouTube URL transcription is not supported in Developer API mode. Skipping.")
+    return None
 
 def get_transcript(video_id, data_dir="data", gemini_api_key=None):
     """
