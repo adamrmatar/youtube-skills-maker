@@ -15,6 +15,7 @@ venv/
 
 # Data and caches
 data/
+!data/state.json
 
 # IDE
 .idea/
