@@ -1,0 +1,28 @@
+firestore:
+  project_id: "experts-d7c3d"
+  collection: "curatedVideos"
+
+pipeline:
+  gemini_model: "gemini-2.5-flash"
+  embedding_model: "gemini-embedding-2"
+  transcript_language: "en"
+  # Threshold for clustering similarity (cosine similarity)
+  clustering_threshold: 0.75
+  # Minimum number of videos in a cluster before triggering synthesis (unless solo_allowed is true)
+  min_videos_in_cluster: 2
+  # Whether a single high-quality video (skill potential >= 4) can be turned into a skill directly
+  allow_solo_skills: true
+
+github:
+  repo: "adamrmatar/ai-skills"
+  branch: "main"
+  skills_path: "skills/"
+  commit_prefix: "feat(skills): "
+
+adapters:
+  enabled:
+    - antigravity
+    - cursor
+    - claude
+    - copilot
+    - windsurf
