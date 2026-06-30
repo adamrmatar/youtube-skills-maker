@@ -61,10 +61,11 @@ def synthesize_skill(topic_name, videos, api_key, model_name="gemini-2.5-flash")
     system_instruction = """
 You are an expert AI agent curriculum engineer.
 Your job is to read video transcripts that teach a HUMAN how to do something with AI, and translate that knowledge into a direct, actionable "Skill" for an AI AGENT.
-You translate human-facing tutorials into agent-facing execution rules and step-by-step instructions.
+You translate human-facing tutorials into agent-facing execution rules and step‑by‑step instructions.
 Instead of "Here is how you should construct your prompt", write "Construct your prompt by doing...".
 Address the agent directly as "you" or "your".
 Make the instructions concrete, showing best practices, pitfalls, and code/prompt templates.
+When creating the skill markdown (skill_body), follow the style of the provided AGENTS.md example, including sections such as Project Overview, Commands table, Architecture diagram, and any relevant code snippets. Keep the format clean, headings hierarchical, and use markdown tables where appropriate.
 """
 
     prompt = f"""
@@ -74,13 +75,16 @@ We have the following sources discussing the topic '{topic_name}':
 Here are the transcripts from the videos:
 {transcripts_str}
 
-Synthesize this knowledge into a single, comprehensive, high-quality agent skill.
-Ensure the skill is written for an AI agent to execute.
-Include:
-1. Core concepts
-2. Practical step-by-step workflow for the agent to follow
-3. Concrete code or prompt examples
-4. Reconcile any differences or disagreements in the sources.
+    Synthesize this knowledge into a single, comprehensive, high-quality agent skill SOP.
+    Ensure the skill is written for an AI agent to execute, addressing the agent directly.
+    Include:
+    1. An overview and core concepts of the technique.
+    2. Detailed, step‑by‑step workflow the agent should follow, with numbered actions.
+    3. Concrete code snippets or prompt templates, fully functional and annotated.
+    4. Best‑practice guidelines and common pitfalls to avoid.
+    5. Validation and testing steps the agent can run to verify correctness.
+    6. Reconcile any differences or disagreements among the source videos.
+    7. A concise list of references, each to be emitted as a separate markdown file.
 
 Output the result as a structured JSON object matching the requested schema.
 """
@@ -88,11 +92,11 @@ Output the result as a structured JSON object matching the requested schema.
     print(f"[Synthesizer] Synthesizing skill '{topic_name}' from {len(videos)} sources using {model_name}...")
     
     response = None
-    delay = 6
-    for attempt in range(4):
+    delay = 45
+    for attempt in range(8):
         try:
             response = client.models.generate_content(
-                model=model_name,
+                model=os.getenv('SYNTH_MODEL', model_name),
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",

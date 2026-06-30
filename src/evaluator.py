@@ -41,11 +41,11 @@ Transcript Content:
 """
 
     response = None
-    delay = 6
-    for attempt in range(4):
+    delay = 45
+    for attempt in range(8):
         try:
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
+                model=os.getenv('EVAL_MODEL', 'gemini-1.5-pro'),
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
