@@ -39,7 +39,20 @@
     "qo4YZvC1q5I": {
       "title": "Claude Cowork + Obsidian Will Change How You Work Forever",
       "status": "failed_no_transcript"
+    },
+    "2HyBA-wkWsA": {
+      "status": "synthesized",
+      "category": "agents",
+      "title": "CLAUDE COWORK FULL COURSE (2+ Hours)",
+      "synthesized_skill_name": "claude-cowork-workflows"
     }
   },
-  "saved_skills": {}
+  "saved_skills": {
+    "claude-cowork-workflows": {
+      "video_ids": [
+        "2HyBA-wkWsA"
+      ],
+      "metadata": {}
+    }
+  }
 }
