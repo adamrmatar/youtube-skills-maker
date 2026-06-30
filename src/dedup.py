@@ -105,7 +105,7 @@ def check_deduplication(topic_name, keywords, repo_dir):
         # Check if any match is an exact or highly relevant name match
         for match in matches:
             match_name = match.get("name", "").lower()
-            if topic_name.lower() in match_name or match_name in topic_name.lower():
+            if topic_name.lower() == match_name:
                 print(f"[Dedup] Found matching ecosystem skill on skills.sh: {match['id']} ({match['installs']} installs)")
                 return {
                     "exists": True,

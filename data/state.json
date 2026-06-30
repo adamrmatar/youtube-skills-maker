@@ -105,6 +105,62 @@
     "LLE6oMh7SxE": {
       "title": "How to Use Claude Routines Better than 99% of People",
       "status": "failed_no_transcript"
+    },
+    "7UMGCiT3fT4": {
+      "title": "AI Project Management: Save 10+ Hours Every Week  AI project managementAI tools for project managers",
+      "status": "evaluated",
+      "is_teachable": false,
+      "skill_potential": 1,
+      "category": "automation",
+      "evaluation": {
+        "is_teachable_skill": false,
+        "technique_description": "The transcript describes a high-level AI-powered project management workflow, detailing how various AI tools (e.g., Notion AI, ChatGPT for planning; Motion, ClickUp for scheduling; Asana AI for task assignment; Slack AI for summarization; Power BI for prediction; Confluence, Coda for reporting) can automate different stages of a project. It highlights the benefits and time savings but does not provide specific instructions, prompt designs, or configurations for an AI agent to execute these tasks. It's an overview of capabilities rather than a teachable technique.",
+        "skill_potential": 1,
+        "category": "automation",
+        "reasoning": "The transcript provides a high-level overview of an AI-powered project management workflow and the benefits of using various AI tools to automate tasks. However, it lacks concrete, step-by-step instructions, prompt designs, or specific configurations that an AI agent could follow to perform these actions. It describes 'what' the tools do and the 'results,' but not 'how' to implement or execute these processes with an AI agent. The speaker explicitly states that a 'step-by-step AI workflow setup' would be shown in a future video, confirming this transcript does not contain the actionable steps."
+      }
+    },
+    "PwLqKIGA25c": {
+      "title": "Live Artifacts Just 10x'd Claude Cowork (Real Use Cases)",
+      "status": "evaluated",
+      "is_teachable": true,
+      "skill_potential": 4,
+      "category": "prompt-engineering",
+      "evaluation": {
+        "is_teachable_skill": true,
+        "technique_description": "The technique is a structured planning process for designing effective Claude Live Artifacts. An AI agent would act as an \"Artifact Planner\" by asking a user a series of specific questions to gather requirements for a Live Artifact. These questions cover the artifact's purpose, usage frequency, data connectors, specific data points, AI's role in data interpretation, brand guidelines, desired actions, interactive chat features, and crucial scope limitations. After collecting these details, the AI agent would synthesize the answers into a comprehensive brief, which can then be used to prompt Claude to build the Live Artifact, ensuring it is well-defined, useful, and avoids common pitfalls.",
+        "skill_potential": 4,
+        "category": "prompt-engineering",
+        "reasoning": "The transcript explicitly details an \"artifact planner skill\" which is a structured set of questions and a workflow designed to define requirements for building Claude Live Artifacts. This is a concrete, actionable process that an AI agent can follow to guide users in designing effective dashboards, thereby avoiding common issues like broad scope or unclear objectives. The steps are clearly laid out as questions to be answered, making it a teachable and repeatable pattern for an AI."
+      }
+    },
+    "erVjBID1tf4": {
+      "title": "AI Agents That Read Documents Like Humans|End-to-End Metadata Extraction System. Agentic AI workflow",
+      "status": "evaluated",
+      "is_teachable": true,
+      "skill_potential": 5,
+      "category": "agents",
+      "evaluation": {
+        "is_teachable_skill": true,
+        "technique_description": "An AI agent can implement an end-to-end agentic workflow for document processing, metadata extraction, validation, enrichment, and intelligent search. This involves several stages: 1. **Document Ingestion & Preprocessing:** Receive documents via an API, store them, normalize (e.g., PDF to image), and clean (e.g., deskew, denoise) to create OCR-ready images. 2. **Intelligent Classification:** Use a fast 'sorter' (e.g., Tesseract, fastText) for initial probabilistic document type hints, followed by an 'expert' agent (e.g., Google Document AI) for definitive classification. A self-correcting feedback loop reprocesses documents if the initial hint is wrong. Adaptive OCR strategies are applied based on the confirmed document type. 3. **Data Extraction:** Perform layout detection, apply region-specific adaptive OCR, post-process extracted text (cleanup, reading order), and generate structured JSON output with rich metadata (confirmed type, confidence, content blocks like tables and key-value pairs). 4. **Multi-level Validation:** Conduct format checks (using regex), semantic checks (using LLMs to understand context), cross-document consistency checks, and fraud detection based on business rules. Assign confidence scores to each field and build a validation graph to unify data. 5. **Data Enrichment:** Standardize names and addresses (using LLMs and external APIs), estimate financial data like income from transaction patterns, and perform feature engineering (e.g., calculate loan-to-income ratio) to create a comprehensive, explained risk profile. 6. **Intelligent Storage & Search:** Link related data points into a unified graph, chunk documents into meaningful pieces, generate vector embeddings for each chunk (using models like OpenAI) for semantic search, and structure metadata for factual filtering. Store data in a three-tier system (vector database for embeddings, structured database for metadata, object storage for original files) and create indexes (e.g., ANN) to enable fast, powerful hybrid searches combining meaning and facts.",
+        "skill_potential": 5,
+        "category": "agents",
+        "reasoning": "The transcript provides a highly detailed, multi-stage, multi-agent workflow for end-to-end document processing. It specifies concrete techniques (regex, LLMs, OCR, embeddings, vector databases), tools (FastAPI, S3, OpenCV, Tesseract, Google Document AI, Pinecone, Postgres, Layout Parser, ANN), and architectural patterns (self-correcting feedback loops, adaptive OCR, hybrid search). This level of detail makes it exceptionally actionable for an AI agent to learn and perform, covering ingestion, classification, extraction, validation, enrichment, and intelligent search within a single, complex system."
+      }
+    },
+    "KkqpOrz0hcE": {
+      "title": "Bank Document Problem Nobody Talks About 💀 | Agentic AI Fix #agenticai agentic ai workflow",
+      "status": "evaluated",
+      "is_teachable": false,
+      "skill_potential": 1,
+      "category": "automation",
+      "evaluation": {
+        "is_teachable_skill": false,
+        "technique_description": "The transcript describes a conceptual 'Agentyc AI workflow' for banks to manage customer documents. This workflow involves automatically extracting metadata, validating data across documents, enriching customer intelligence, converting data into vectors, and linking everything to documents to make them instantly searchable. However, it does not provide any specific instructions, techniques, prompt designs, or code patterns for an AI agent to perform these tasks. It's a high-level overview of a solution, not a 'how-to' guide.",
+        "skill_potential": 1,
+        "category": "automation",
+        "reasoning": "The transcript outlines a problem (poor document management in banks) and proposes a high-level AI-driven solution. It describes what the 'Agentyc AI workflow' *does* (extracts metadata, validates, converts to vectors, links for searchability) but provides absolutely no details on *how* an AI agent would accomplish these steps. There are no actionable instructions, prompt frameworks, system designs, or code patterns. It's purely a conceptual pitch and a call to action to watch a full video, making it unactionable for skill extraction."
+      }
     }
   },
   "saved_skills": {

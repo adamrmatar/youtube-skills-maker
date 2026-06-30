@@ -1,51 +1,61 @@
-name: YouTube Skills Pipeline
+name: YouTube Skills Maker Pipeline
+
+# This workflow runs the skill generation pipeline on a deterministic schedule.
+# It checks out the repository, sets up Python, installs dependencies,
+# runs the pipeline, and pushes any newly generated skill scaffolds back.
 
 on:
   schedule:
-    - cron: "0 2 * * *"   # daily at 02:00 UTC
-  workflow_dispatch:
+    - cron: "0 0 * * *"   # Daily at midnight UTC (adjustable)
+  workflow_dispatch:        # Allows manual triggering if needed
+
+permissions:
+  contents: write           # Needed to push commits back to the repo
+  issues: read
+  pull-requests: read
 
 jobs:
-  generate-skills:
+  run-pipeline:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
 
       - name: Install dependencies
         run: |
           python -m venv .venv
           . .venv/bin/activate
-          pip install --upgrade pip
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "No requirements.txt found"; fi
 
-      - name: Run pipeline (limit 10)
+      - name: Run skill generation pipeline
         env:
-          FIRESTORE_PROJECT_ID: ${{ secrets.FIRESTORE_PROJECT_ID }}
-          # add other required secrets here
+          # Add any required environment variables here (e.g., YouTube API key)
+          # YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: |
           . .venv/bin/activate
-          .venv/bin/python run.py --limit 10
+          # Adjust arguments as needed; default runs configured video list
+          python run.py
 
-      - name: Detect new skill files
-        id: changes
-        run: |
-          git add -A
-          echo "changed=$(git status --porcelain | wc -l)" >> $GITHUB_OUTPUT
-
-      - name: Commit & push new skills
-        if: steps.changes.outputs.changed != "0"
+      - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: add generated AI skills (auto)"
-          git push origin ${{ github.ref }}
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push new skills
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add .
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit."
+          else
+            git commit -m "🤖 Auto‑generated skill scaffolds [skip ci]"
+            git push origin main
+          fi
