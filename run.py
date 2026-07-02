@@ -15,7 +15,7 @@ from src.cluster import cluster_videos
 from src.dedup import check_deduplication
 from src.synthesize import synthesize_skill
 from src.skill_builder import build_universal_skill
-from src.publisher import publish_skills_to_github
+from src.publisher import publish_skills_to_github, publish_to_ikf
 
 def parse_args():
     parser = argparse.ArgumentParser(description="YouTube Skills Maker Pipeline")
@@ -229,8 +229,14 @@ def main():
 
     # 8. Push to GitHub if changes occurred
     if skills_created_or_updated and not args.no_push:
-        print("\n[Pipeline] Publishing new skills to GitHub...")
+        print("\n[Pipeline] Publishing new skills to GitHub (ai-skills)...")
         publish_skills_to_github(repo_slug, local_repo_path)
+        print("\n[Pipeline] Publishing to TDH-Labs/i-know-kung-fu (vercel-skills format)...")
+        publish_to_ikf(
+            src_skills_path=os.path.join(local_repo_path, "skills"),
+            ikf_repo_slug="TDH-Labs/i-know-kung-fu",
+            ikf_local_path="data/i-know-kung-fu",
+        )
     elif not skills_created_or_updated:
         print("\n[Pipeline] No skills were created or updated in this run.")
     else:
