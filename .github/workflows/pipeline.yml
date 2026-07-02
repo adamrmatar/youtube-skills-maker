@@ -1,8 +1,8 @@
 name: YouTube Skills Maker Pipeline
 
 # This workflow runs the skill generation pipeline on a deterministic schedule.
-# It checks out the repository, sets up Python, installs dependencies,
-# runs the pipeline, and pushes any newly generated skill scaffolds back.
+# It extracts YouTube transcripts, generates skill scaffolds using the Vercel‑labs SDK,
+# runs lint and tests on the generated code, and commits any changes back to the repository.
 
 on:
   schedule:
@@ -23,26 +23,47 @@ jobs:
         with:
           fetch-depth: 0
 
+      # ---------- Python part ----------
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m venv .venv
           . .venv/bin/activate
           if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "No requirements.txt found"; fi
 
-      - name: Run skill generation pipeline
-        env:
-          # Add any required environment variables here (e.g., YouTube API key)
-          # YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      - name: Run skill generation pipeline (Python)
         run: |
           . .venv/bin/activate
           # Adjust arguments as needed; default runs configured video list
           python run.py
 
+      # ---------- Node SDK part ----------
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install SDK dependencies
+        working-directory: ./vercel-skills
+        run: npm ci
+
+      - name: Lint generated skills
+        working-directory: ./vercel-skills
+        run: npm run lint
+
+      - name: Test generated skills
+        working-directory: ./vercel-skills
+        run: npm test
+
+      - name: Build (optional)
+        working-directory: ./vercel-skills
+        run: npm run build
+
+      # ---------- Commit changes ----------
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
