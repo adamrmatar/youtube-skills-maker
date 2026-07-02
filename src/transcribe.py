@@ -3,7 +3,9 @@ import os
 import re
 import subprocess
 import time
+import http.cookiejar
 from pathlib import Path
+from requests import Session
 from youtube_transcript_api import YouTubeTranscriptApi
 
 
@@ -86,7 +88,7 @@ def extract_via_gemini(video_id, api_key):
 def get_transcript(video_id, data_dir="data", gemini_api_key=None):
     """
     Tries to retrieve the transcript for a video using:
-    1. youtube_transcript_api (with cookies fallback)
+    1. youtube_transcript_api (with cookies fallback loaded via Session)
     2. yt-dlp download and parse (with cookies fallback)
     3. Gemini API native YouTube transcription
     """
@@ -120,7 +122,20 @@ def get_transcript(video_id, data_dir="data", gemini_api_key=None):
     try:
         print(f"[{video_id}] Fetching transcript from youtube_transcript_api...")
         if cookies_path:
-            transcript_list = YouTubeTranscriptApi().fetch(video_id, languages=["en"], cookies=str(cookies_path))
+            # Custom HTTP Session to load cookies manually (since package cookie support was disabled)
+            session = Session()
+            session.headers.update({"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"})
+            
+            try:
+                cj = http.cookiejar.MozillaCookieJar(str(cookies_path))
+                cj.load(ignore_discard=True, ignore_expires=True)
+                session.cookies = cj
+                print(f"[{video_id}] Loaded cookies into requests session.")
+            except Exception as ce:
+                print(f"[{video_id}] Failed to load cookies.txt into MozillaCookieJar: {ce}")
+                
+            api = YouTubeTranscriptApi(http_client=session)
+            transcript_list = api.fetch(video_id, languages=["en"])
         else:
             transcript_list = YouTubeTranscriptApi().fetch(video_id, languages=["en"])
             
