@@ -120,11 +120,11 @@ def get_transcript(video_id, data_dir="data", gemini_api_key=None):
     try:
         print(f"[{video_id}] Fetching transcript from youtube_transcript_api...")
         if cookies_path:
-            transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"], cookies=str(cookies_path))
+            transcript_list = YouTubeTranscriptApi().fetch(video_id, languages=["en"], cookies=str(cookies_path))
         else:
-            transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=["en"])
+            transcript_list = YouTubeTranscriptApi().fetch(video_id, languages=["en"])
             
-        text = " ".join([t["text"] for t in transcript_list])
+        text = " ".join([t.get("text", "") if isinstance(t, dict) else getattr(t, "text", "") for t in transcript_list])
         method = "youtube_transcript_api"
     except Exception as e:
         print(f"[{video_id}] youtube_transcript_api failed: {e}")
