@@ -41,12 +41,38 @@ An automated AI knowledge ingestion pipeline that regularly pulls curated video 
    source .venv/bin/activate
    pip install -r requirements.txt
    ```
-3. Copy `.env.example` to `.env` and fill in your Gemini API key:
+3. Copy `.env.example` to `.env` and configure your chosen provider:
    ```bash
    cp .env.example .env
-   # Add your key to .env:
-   # GEMINI_API_KEY=your_gemini_api_key
    ```
+
+   Open `.env` and fill in the values for your provider:
+
+   #### Option A: OpenRouter (DeepSeek)
+   ```bash
+   LLM_API_BASE=https://openrouter.ai/api/v1
+   LLM_API_KEY=sk-or-v1-your-key-here
+   EVAL_MODEL=deepseek/deepseek-chat
+   SYNTH_MODEL=deepseek/deepseek-chat
+   ```
+
+   #### Option B: OpenAI Directly
+   ```bash
+   LLM_API_BASE=https://api.openai.com/v1
+   LLM_API_KEY=sk-proj-your-key-here
+   EVAL_MODEL=gpt-4o-mini
+   SYNTH_MODEL=gpt-4o
+   ```
+
+   #### Option C: Local Ollama (Free)
+   ```bash
+   LLM_API_BASE=http://localhost:11434/v1
+   LLM_API_KEY=ollama
+   EVAL_MODEL=qwen2.5-coder:7b
+   SYNTH_MODEL=qwen2.5-coder:7b
+   ```
+
+   *(Note: The pipeline will automatically fall back to `GEMINI_API_KEY` if configured, which is used for fallback evaluations and transcriptions.)*
 
 ---
 
