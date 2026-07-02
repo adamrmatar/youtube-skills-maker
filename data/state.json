@@ -2,213 +2,169 @@
   "processed_videos": {
     "Lrz5EHwiwXE": {
       "title": "How LLMs Actually Work? (Why They Hallucinate in Production) #LLMs #GenerativeAI #GenAI",
-      "status": "failed_no_transcript"
+      "status": "evaluated",
+      "is_teachable": false,
+      "skill_potential": 1,
+      "category": "Educational Content",
+      "evaluation": {
+        "is_teachable_skill": false,
+        "technique_description": "The transcript primarily provides an educational overview of how Large Language Models (LLMs) function, focusing on their training, operation, and limitations. It explains concepts such as token prediction, context windows, and the probabilistic nature of LLMs. However, it does not present a specific actionable technique, method, prompt framework, code pattern, or workflow that can be directly turned into a 'Skill' file for an AI agent to execute.",
+        "skill_potential": 1,
+        "category": "Educational Content",
+        "reasoning": "While the transcript is informative and could enhance understanding of LLMs, it lacks a concrete, executable method or framework that can be encapsulated as a skill for an AI agent. The content is more suited for educational purposes rather than practical implementation as a skill.",
+        "keywords": [
+          "Large Language Models",
+          "LLMs",
+          "token prediction",
+          "context window",
+          "probabilistic text generation",
+          "training",
+          "hallucinations",
+          "RAG",
+          "prompt design",
+          "context management"
+        ]
+      }
     },
     "7zHGGNnDMKQ": {
       "title": "Vector Databases Explained Simply | Why GenAI Needs Them? #VectorDatabase #GenerativeAI #GenAI #RAG",
-      "status": "failed_no_transcript"
+      "status": "synthesized",
+      "is_teachable": true,
+      "skill_potential": 5,
+      "category": "AI/ML",
+      "evaluation": {
+        "is_teachable_skill": true,
+        "technique_description": "Semantic similarity search using vector databases",
+        "skill_potential": 5,
+        "category": "AI/ML",
+        "reasoning": "The transcript explains the concept of vector databases and their role in generative AI systems, particularly in enabling semantic similarity search. This is a fundamental technique in AI that can be structured into a skill for an AI agent to execute.",
+        "keywords": [
+          "vector databases",
+          "semantic similarity search",
+          "embedding model",
+          "generative AI",
+          "RAG systems",
+          "MLOps",
+          "LLM ops"
+        ]
+      },
+      "synthesized_skill_name": "ai/ml"
     },
     "1PxEziv5XIU": {
       "title": "The Two Best AI Models/Enemies Just Got Released Simultaneously",
-      "status": "failed_no_transcript"
+      "status": "evaluated",
+      "is_teachable": false,
+      "skill_potential": 1,
+      "category": "AI Model Analysis",
+      "evaluation": {
+        "is_teachable_skill": false,
+        "technique_description": "The transcript primarily discusses the release and comparative analysis of two large language models, Claude Opus 4.6 and GPT 5.3, focusing on their capabilities, benchmarks, and potential impacts on productivity and job automation. It does not explicitly detail a specific actionable technique, method, prompt framework, code pattern, or workflow that can be directly turned into a 'Skill' file for an AI agent to execute. Instead, it provides insights and comparisons that could inform the development or selection of AI models for specific tasks.",
+        "skill_potential": 1,
+        "category": "AI Model Analysis",
+        "reasoning": "The content is informative and provides a detailed comparison of AI models, which could be useful for understanding their strengths and weaknesses. However, it lacks a concrete, actionable skill that can be directly implemented by an AI agent. The discussion around benchmarks, model behaviors, and potential applications is more suited to strategic decision-making rather than the execution of a specific task or workflow.",
+        "keywords": [
+          "AI models",
+          "benchmarks",
+          "productivity",
+          "job automation",
+          "Claude Opus 4.6",
+          "GPT 5.3",
+          "comparative analysis"
+        ]
+      }
     },
     "MLlwA_fXE4Q": {
       "title": "RAG vs Fine-Tuning:What Companies Actually Use #RAG #FineTuning #GenerativeAI #GenAI #AIInProduction",
-      "status": "failed_no_transcript"
+      "status": "synthesized",
+      "is_teachable": true,
+      "skill_potential": 4,
+      "category": "Generative AI",
+      "evaluation": {
+        "is_teachable_skill": true,
+        "technique_description": "The video explains the key differences between Retrieval-Augmented Generation (RAG) and fine-tuning in the context of generative AI systems. RAG allows a language model to use external data at query time by retrieving relevant documents and passing them as context, making it ideal for scenarios where information is factual, changing, or private (e.g., company policies). Fine-tuning, on the other hand, modifies the model's behavior to ensure consistent responses in terms of tone, structure, and style, which is useful for applications like customer support assistants. The video emphasizes that most companies start with RAG due to its ease of implementation and flexibility, while fine-tuning is typically reserved for cases where retrieval and prompts alone cannot guarantee the desired behavior.",
+        "skill_potential": 4,
+        "category": "Generative AI",
+        "reasoning": "The video provides a clear, practical explanation of when to use RAG versus fine-tuning, which is a valuable skill for AI engineers and practitioners. It covers real-world scenarios, production considerations, and common pitfalls, making it highly relevant for professionals working with generative AI systems. The content is actionable and aligns with industry best practices, justifying a high potential rating.",
+        "keywords": [
+          "RAG",
+          "fine-tuning",
+          "generative AI",
+          "AI production",
+          "retrieval-augmented generation",
+          "language models",
+          "AI systems",
+          "MLOps",
+          "AI careers"
+        ]
+      },
+      "synthesized_skill_name": "generative-ai"
     },
     "2_DPnzoiHaY": {
       "title": "Gemini 3.1 Pro and the Downfall of Benchmarks: Welcome to the Vibe Era of AI",
-      "status": "failed_no_transcript"
+      "status": "evaluated",
+      "is_teachable": false,
+      "skill_potential": 1,
+      "category": "AI Model Analysis",
+      "evaluation": {
+        "is_teachable_skill": false,
+        "technique_description": "The transcript primarily discusses the nuances of AI model benchmarking, domain specialization, and the evolution of AI capabilities. It does not provide a specific actionable technique, method, prompt framework, code pattern, or workflow that can be directly turned into a 'Skill' file for an AI agent to execute.",
+        "skill_potential": 1,
+        "category": "AI Model Analysis",
+        "reasoning": "The content is informative and provides insights into AI model performance and benchmarking but lacks a concrete, teachable skill or method that can be systematically applied or executed by an AI agent.",
+        "keywords": [
+          "AI benchmarking",
+          "domain specialization",
+          "Gemini 3.1 Pro",
+          "Claude Opus 4.6",
+          "GPT 5.2",
+          "ARC-AGI-2",
+          "hallucinations",
+          "fine-tuning",
+          "general intelligence"
+        ]
+      }
     },
     "Cru804JMjPI": {
       "title": "Deadline Day for Autonomous AI Weapons & Mass Surveillance",
-      "status": "failed_no_transcript"
-    },
-    "aoc_NQfxjy8": {
-      "title": "We Replaced Our Entire Team with 30+ Claude AI Agents (Here's How)",
-      "status": "failed_no_transcript"
-    },
-    "DjnNHNSb5zU": {
-      "title": "End-to-End GenAI Architecture Explained (Production System)#GenerativeAI #GenAI #AIArchitecture #RAG",
-      "status": "failed_no_transcript"
-    },
-    "1t1oniBZhzk": {
-      "title": "7 AI Tools That Save You Hours Every Week",
-      "status": "failed_no_transcript"
-    },
-    "qo4YZvC1q5I": {
-      "title": "Claude Cowork + Obsidian Will Change How You Work Forever",
-      "status": "failed_no_transcript"
-    },
-    "2HyBA-wkWsA": {
-      "status": "synthesized",
-      "category": "agents",
-      "title": "CLAUDE COWORK FULL COURSE (2+ Hours)",
-      "synthesized_skill_name": "claude-cowork-workflows"
-    },
-    "nnsBDUd8H4w": {
-      "title": "This bug hides in every app! #vibecoding #aicoding #programming",
       "status": "evaluated",
       "is_teachable": false,
       "skill_potential": 1,
-      "category": "other",
+      "category": "Ethical AI Governance",
       "evaluation": {
         "is_teachable_skill": false,
-        "technique_description": "",
+        "technique_description": "The transcript does not describe a teachable skill or technique for an AI agent. It focuses on the ethical implications and policy debates regarding AI use in military and surveillance contexts.",
         "skill_potential": 1,
-        "category": "other",
-        "reasoning": "The transcript describes a physical automotive diagnostic and repair process, specifically identifying a vacuum leak using a smoke test and replacing a PCV valve. This is a hands-on task that an AI agent cannot perform directly. The content is a demonstration of a physical skill, not a digital workflow, prompt design, or code pattern for an AI agent."
+        "category": "Ethical AI Governance",
+        "reasoning": "The transcript discusses ethical and policy issues surrounding the use of AI in autonomous weapons and mass surveillance, but it does not present a specific actionable technique, method, or workflow that can be codified into an AI agent skill. The content is more about debate and policy rather than executable AI functionalities.",
+        "keywords": [
+          "autonomous weapons",
+          "mass surveillance",
+          "AI ethics",
+          "Pentagon",
+          "Anthropic",
+          "responsible AI"
+        ]
       }
-    },
-    "bc4NrE0cOE0": {
-      "title": "How to use Karpathy's Autoresearch to 10x Claude",
-      "status": "evaluated",
-      "is_teachable": false,
-      "skill_potential": 1,
-      "category": "design",
-      "evaluation": {
-        "is_teachable_skill": false,
-        "technique_description": "The transcript describes a physical DIY craft for making slime using shampoo, conditioner, and salt, involving steps like mixing, adding salt, freezing, and repeating until a desired consistency is achieved. An AI agent cannot perform these physical actions.",
-        "skill_potential": 1,
-        "category": "design",
-        "reasoning": "The transcript details a step-by-step guide for a physical DIY craft (making slime). An AI agent cannot physically interact with ingredients, mix them, or use a freezer. Therefore, this content does not provide any actionable technique, method, prompt framework, code pattern, or workflow that an AI agent could perform or execute. The video title is completely mismatched with the transcript content."
-      }
-    },
-    "l5Diqeoffa4": {
-      "title": "The 7 Levels of Using Claude Context Explained in 24 min",
-      "status": "failed_no_transcript"
-    },
-    "HXG-0l_fWls": {
-      "title": "Why RAG Systems Fail in Production (And How to Fix It) #RAG #GenerativeAI #GenAI #AIArchitecture",
-      "status": "failed_no_transcript"
-    },
-    "bXnRA3pJavE": {
-      "title": "8 Claude Skills I Can’t Live Without",
-      "status": "failed_no_transcript"
-    },
-    "BqQ_VH8iWJQ": {
-      "title": "How to Monitor Generative AI Systems in Production (Cost & Quality) #GenerativeAI #GenAI #LLMOps",
-      "status": "failed_no_transcript"
-    },
-    "jxHIw_OA8_I": {
-      "title": "Stop perfecting your prompt. Do this instead",
-      "status": "failed_no_transcript"
-    },
-    "91Nw-3FiHHk": {
-      "title": "You Only Need 5 AI Tools in 2026 (The Ultimate AI Stack Explained). “AI tools 2026”+“best AI tools”",
-      "status": "failed_no_transcript"
-    },
-    "p1ak5NfWuEA": {
-      "title": "Most AI agents are fake (here's a 10-second test)",
-      "status": "failed_no_transcript"
-    },
-    "LLE6oMh7SxE": {
-      "title": "How to Use Claude Routines Better than 99% of People",
-      "status": "failed_no_transcript"
-    },
-    "7UMGCiT3fT4": {
-      "title": "AI Project Management: Save 10+ Hours Every Week  AI project managementAI tools for project managers",
-      "status": "evaluated",
-      "is_teachable": false,
-      "skill_potential": 1,
-      "category": "automation",
-      "evaluation": {
-        "is_teachable_skill": false,
-        "technique_description": "The transcript describes a high-level AI-powered project management workflow, detailing how various AI tools (e.g., Notion AI, ChatGPT for planning; Motion, ClickUp for scheduling; Asana AI for task assignment; Slack AI for summarization; Power BI for prediction; Confluence, Coda for reporting) can automate different stages of a project. It highlights the benefits and time savings but does not provide specific instructions, prompt designs, or configurations for an AI agent to execute these tasks. It's an overview of capabilities rather than a teachable technique.",
-        "skill_potential": 1,
-        "category": "automation",
-        "reasoning": "The transcript provides a high-level overview of an AI-powered project management workflow and the benefits of using various AI tools to automate tasks. However, it lacks concrete, step-by-step instructions, prompt designs, or specific configurations that an AI agent could follow to perform these actions. It describes 'what' the tools do and the 'results,' but not 'how' to implement or execute these processes with an AI agent. The speaker explicitly states that a 'step-by-step AI workflow setup' would be shown in a future video, confirming this transcript does not contain the actionable steps."
-      }
-    },
-    "PwLqKIGA25c": {
-      "title": "Live Artifacts Just 10x'd Claude Cowork (Real Use Cases)",
-      "status": "evaluated",
-      "is_teachable": true,
-      "skill_potential": 4,
-      "category": "prompt-engineering",
-      "evaluation": {
-        "is_teachable_skill": true,
-        "technique_description": "The technique is a structured planning process for designing effective Claude Live Artifacts. An AI agent would act as an \"Artifact Planner\" by asking a user a series of specific questions to gather requirements for a Live Artifact. These questions cover the artifact's purpose, usage frequency, data connectors, specific data points, AI's role in data interpretation, brand guidelines, desired actions, interactive chat features, and crucial scope limitations. After collecting these details, the AI agent would synthesize the answers into a comprehensive brief, which can then be used to prompt Claude to build the Live Artifact, ensuring it is well-defined, useful, and avoids common pitfalls.",
-        "skill_potential": 4,
-        "category": "prompt-engineering",
-        "reasoning": "The transcript explicitly details an \"artifact planner skill\" which is a structured set of questions and a workflow designed to define requirements for building Claude Live Artifacts. This is a concrete, actionable process that an AI agent can follow to guide users in designing effective dashboards, thereby avoiding common issues like broad scope or unclear objectives. The steps are clearly laid out as questions to be answered, making it a teachable and repeatable pattern for an AI."
-      }
-    },
-    "erVjBID1tf4": {
-      "title": "AI Agents That Read Documents Like Humans|End-to-End Metadata Extraction System. Agentic AI workflow",
-      "status": "evaluated",
-      "is_teachable": true,
-      "skill_potential": 5,
-      "category": "agents",
-      "evaluation": {
-        "is_teachable_skill": true,
-        "technique_description": "An AI agent can implement an end-to-end agentic workflow for document processing, metadata extraction, validation, enrichment, and intelligent search. This involves several stages: 1. **Document Ingestion & Preprocessing:** Receive documents via an API, store them, normalize (e.g., PDF to image), and clean (e.g., deskew, denoise) to create OCR-ready images. 2. **Intelligent Classification:** Use a fast 'sorter' (e.g., Tesseract, fastText) for initial probabilistic document type hints, followed by an 'expert' agent (e.g., Google Document AI) for definitive classification. A self-correcting feedback loop reprocesses documents if the initial hint is wrong. Adaptive OCR strategies are applied based on the confirmed document type. 3. **Data Extraction:** Perform layout detection, apply region-specific adaptive OCR, post-process extracted text (cleanup, reading order), and generate structured JSON output with rich metadata (confirmed type, confidence, content blocks like tables and key-value pairs). 4. **Multi-level Validation:** Conduct format checks (using regex), semantic checks (using LLMs to understand context), cross-document consistency checks, and fraud detection based on business rules. Assign confidence scores to each field and build a validation graph to unify data. 5. **Data Enrichment:** Standardize names and addresses (using LLMs and external APIs), estimate financial data like income from transaction patterns, and perform feature engineering (e.g., calculate loan-to-income ratio) to create a comprehensive, explained risk profile. 6. **Intelligent Storage & Search:** Link related data points into a unified graph, chunk documents into meaningful pieces, generate vector embeddings for each chunk (using models like OpenAI) for semantic search, and structure metadata for factual filtering. Store data in a three-tier system (vector database for embeddings, structured database for metadata, object storage for original files) and create indexes (e.g., ANN) to enable fast, powerful hybrid searches combining meaning and facts.",
-        "skill_potential": 5,
-        "category": "agents",
-        "reasoning": "The transcript provides a highly detailed, multi-stage, multi-agent workflow for end-to-end document processing. It specifies concrete techniques (regex, LLMs, OCR, embeddings, vector databases), tools (FastAPI, S3, OpenCV, Tesseract, Google Document AI, Pinecone, Postgres, Layout Parser, ANN), and architectural patterns (self-correcting feedback loops, adaptive OCR, hybrid search). This level of detail makes it exceptionally actionable for an AI agent to learn and perform, covering ingestion, classification, extraction, validation, enrichment, and intelligent search within a single, complex system."
-      }
-    },
-    "KkqpOrz0hcE": {
-      "title": "Bank Document Problem Nobody Talks About 💀 | Agentic AI Fix #agenticai agentic ai workflow",
-      "status": "evaluated",
-      "is_teachable": false,
-      "skill_potential": 1,
-      "category": "automation",
-      "evaluation": {
-        "is_teachable_skill": false,
-        "technique_description": "The transcript describes a conceptual 'Agentyc AI workflow' for banks to manage customer documents. This workflow involves automatically extracting metadata, validating data across documents, enriching customer intelligence, converting data into vectors, and linking everything to documents to make them instantly searchable. However, it does not provide any specific instructions, techniques, prompt designs, or code patterns for an AI agent to perform these tasks. It's a high-level overview of a solution, not a 'how-to' guide.",
-        "skill_potential": 1,
-        "category": "automation",
-        "reasoning": "The transcript outlines a problem (poor document management in banks) and proposes a high-level AI-driven solution. It describes what the 'Agentyc AI workflow' *does* (extracts metadata, validates, converts to vectors, links for searchability) but provides absolutely no details on *how* an AI agent would accomplish these steps. There are no actionable instructions, prompt frameworks, system designs, or code patterns. It's purely a conceptual pitch and a call to action to watch a full video, making it unactionable for skill extraction."
-      }
-    },
-    "E5-QK3CDVQM": {
-      "title": "I Open-Sourced My Own AFK Software Factory",
-      "status": "failed_no_transcript"
-    },
-    "ie1M8p-SVfM": {
-      "title": "Getting Humans Out of the Way: How to Work with Teams of Agents",
-      "status": "failed_no_transcript"
-    },
-    "_rbWOwkFzcg": {
-      "title": "👉 Make Money with AI in 2026 💸 (Step-by-Step Guide for Beginners) #moneywithai  ai side hustles 2026",
-      "status": "failed_no_transcript"
-    },
-    "mETsN5SO75I": {
-      "title": "AI Agents Aren’t Smarter — They Just Save Time",
-      "status": "failed_no_transcript"
-    },
-    "wtzzWyrEY_A": {
-      "title": "The Creator of Superpowers: Why Real Agentic Engineering Beats Vibe Coding",
-      "status": "failed_no_transcript"
-    },
-    "ydQX__iHXGw": {
-      "title": "Inside AI Healthcare: Workflow Automation, and the Future of Patient Care | EP 139",
-      "status": "failed_no_transcript"
-    },
-    "MzWIIlx0Gpc": {
-      "title": "Burn through the backlog from hell with /triage",
-      "status": "failed_no_transcript"
-    },
-    "aARgAvZfZ_E": {
-      "title": "Before vs After AI: My 8-Hour Workday Cut in Half",
-      "status": "failed_no_transcript"
-    },
-    "qNiLgiH47-8": {
-      "title": "AI Freed 1 Hour/Day: My 30-Day Workflow Transformation",
-      "status": "failed_no_transcript"
-    },
-    "pFU3g1aEX2Y": {
-      "title": "ChatGPT Won’t Grow Your Business — Build a Chatbot Stack That Scales",
-      "status": "failed_no_transcript"
     }
   },
   "saved_skills": {
-    "claude-cowork-workflows": {
+    "ai/ml": {
       "video_ids": [
-        "2HyBA-wkWsA"
+        "7zHGGNnDMKQ"
       ],
-      "metadata": {}
+      "metadata": {
+        "category": "AI/ML",
+        "videos_count": 1
+      }
+    },
+    "generative-ai": {
+      "video_ids": [
+        "MLlwA_fXE4Q"
+      ],
+      "metadata": {
+        "category": "Generative AI",
+        "videos_count": 1
+      }
     }
   }
 }
