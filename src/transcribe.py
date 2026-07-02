@@ -44,9 +44,11 @@ def extract_via_ytdlp(video_id, data_dir, cookies_path=None):
         "-o", output_tmpl,
     ]
     
-    # Add cookies if available
+    # Add cookies and user agent if available
     if cookies_path and os.path.exists(cookies_path):
         cmd.extend(["--cookies", str(cookies_path)])
+        ua = os.getenv("USER_AGENT", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36").strip()
+        cmd.extend(["--user-agent", ua])
         
     cmd.append(video_url)
     
@@ -124,13 +126,14 @@ def get_transcript(video_id, data_dir="data", gemini_api_key=None):
         if cookies_path:
             # Custom HTTP Session to load cookies manually (since package cookie support was disabled)
             session = Session()
-            session.headers.update({"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"})
+            ua = os.getenv("USER_AGENT", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36").strip()
+            session.headers.update({"User-Agent": ua})
             
             try:
                 cj = http.cookiejar.MozillaCookieJar(str(cookies_path))
                 cj.load(ignore_discard=True, ignore_expires=True)
                 session.cookies = cj
-                print(f"[{video_id}] Loaded cookies into requests session.")
+                print(f"[{video_id}] Loaded cookies and User-Agent into requests session.")
             except Exception as ce:
                 print(f"[{video_id}] Failed to load cookies.txt into MozillaCookieJar: {ce}")
                 
