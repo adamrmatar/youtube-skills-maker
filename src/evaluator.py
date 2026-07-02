@@ -242,7 +242,7 @@ Transcript:
             from google.genai.errors import ClientError
 
             client = genai.Client(api_key=api_key)
-            gemini_model = "gemini-1.5-flash"
+            gemini_model = "gemini-2.5-flash"
             print(f"[Evaluator] [{video_id}] → Gemini fallback ({gemini_model})")
 
             full_prompt = f"{system}\n\n{user_prompt}"

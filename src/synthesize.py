@@ -258,7 +258,7 @@ Output as JSON matching the SynthesizedSkill schema."""
 
     # --- Gemini fallback ---
     if api_key:
-        gemini_model = os.getenv("GEMINI_SYNTH_MODEL", "gemini-1.5-pro")
+        gemini_model = os.getenv("GEMINI_SYNTH_MODEL", "gemini-2.5-flash")
         print(f"[Synthesizer] Using Gemini fallback ({gemini_model})...")
         result = _call_gemini_synth(user_prompt, system_instruction, api_key, gemini_model)
         if result:
