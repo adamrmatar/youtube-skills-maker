@@ -1,9 +1,89 @@
 import os
+import re
 import shutil
 import subprocess
+import sys
 import yaml
 from pathlib import Path
 from git import Repo
+
+# ---------------------------------------------------------------------------
+# Vercel-skills conversion helpers (mirrors scripts/convert_to_vercel_skills.py)
+# ---------------------------------------------------------------------------
+
+def _build_skill_md(meta: dict, body: str, platforms: list) -> str:
+    """Build a SKILL.md with YAML frontmatter compatible with npx skills."""
+    name = meta.get("name", "Unknown Skill")
+    description = meta.get("description", "")
+    keywords = meta.get("keywords", [])
+
+    frontmatter = {"name": name, "description": description}
+    if keywords:
+        frontmatter["tags"] = keywords
+
+    fm_str = yaml.dump(frontmatter, default_flow_style=False, allow_unicode=True).strip()
+
+    body_clean = re.sub(r"^# .+\n\n?", "", body, count=1).strip()
+    sections = [f"# {name}", "", f"> {description}", "", body_clean]
+
+    sources = meta.get("sources", [])
+    if sources:
+        sections.append("\n## 📺 Source Videos\n")
+        for src in sources:
+            title = src.get("title", "")
+            link = src.get("link", "")
+            channel = src.get("channel", "")
+            if link:
+                line = f"- [{title}]({link})"
+                if channel:
+                    line += f" — {channel}"
+            else:
+                line = f"- {title}" + (f" — {channel}" if channel else "")
+            sections.append(line)
+
+    difficulty = meta.get("difficulty", "")
+    if difficulty:
+        sections.append(f"\n**Difficulty**: {difficulty.capitalize()}")
+
+    prereqs = meta.get("prerequisites", [])
+    if prereqs:
+        sections.append("\n## Prerequisites\n")
+        for p in prereqs:
+            sections.append(f"- {p}")
+
+    full_body = "\n".join(sections).strip()
+    return f"---\n{fm_str}\n---\n\n{full_body}\n"
+
+
+def _convert_skill_to_vercel(skill_dir: Path, dst_root: Path) -> None:
+    """Convert one pipeline skill folder → vercel-compatible SKILL.md."""
+    meta_path = skill_dir / "metadata.yaml"
+    meta = {}
+    if meta_path.exists():
+        with open(meta_path) as f:
+            meta = yaml.safe_load(f) or {}
+
+    body = ""
+    body_path = skill_dir / "skill.md"
+    if body_path.exists():
+        with open(body_path) as f:
+            body = f.read()
+
+    platforms_dir = skill_dir / "platforms"
+    platforms = [p.name for p in platforms_dir.iterdir() if p.is_file()] if platforms_dir.exists() else []
+
+    skill_md = _build_skill_md(meta, body, platforms)
+
+    out_dir = dst_root / skill_dir.name
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "SKILL.md").write_text(skill_md, encoding="utf-8")
+
+    refs_src = skill_dir / "references"
+    refs_dst = out_dir / "references"
+    if refs_src.exists():
+        if refs_dst.exists():
+            shutil.rmtree(refs_dst)
+        shutil.copytree(refs_src, refs_dst)
 
 def init_or_clone_repo(repo_slug, local_path):
     """
@@ -142,3 +222,123 @@ def publish_skills_to_github(repo_slug="adamrmatar/ai-skills", local_repo_path="
         except Exception as ex:
             print(f"[Publisher] Git CLI push retry failed: {ex}")
             return False
+
+
+# ---------------------------------------------------------------------------
+# Publish to TDH-Labs/i-know-kung-fu (vercel-skills compatible format)
+# ---------------------------------------------------------------------------
+
+def publish_to_ikf(
+    src_skills_path: str = "data/ai-skills/skills",
+    ikf_repo_slug: str = "TDH-Labs/i-know-kung-fu",
+    ikf_local_path: str = "data/i-know-kung-fu",
+) -> bool:
+    """
+    Convert all skills from the pipeline format to vercel-skills format
+    and push them to TDH-Labs/i-know-kung-fu.
+    """
+    src_path = Path(src_skills_path)
+    if not src_path.exists():
+        print(f"[IKF Publisher] Source skills path not found: {src_path}")
+        return False
+
+    # Ensure the i-know-kung-fu repo is cloned locally
+    try:
+        repo = init_or_clone_repo(ikf_repo_slug, ikf_local_path)
+    except Exception as e:
+        print(f"[IKF Publisher] Failed to initialise repo: {e}")
+        return False
+
+    dst_skills = Path(ikf_local_path) / "skills"
+    dst_skills.mkdir(parents=True, exist_ok=True)
+
+    # Convert every skill
+    skill_dirs = [d for d in src_path.iterdir() if d.is_dir()]
+    converted = []
+    for skill_dir in sorted(skill_dirs):
+        try:
+            _convert_skill_to_vercel(skill_dir, dst_skills)
+            converted.append(skill_dir.name)
+            print(f"[IKF Publisher]   ✅ Converted: {skill_dir.name}")
+        except Exception as e:
+            print(f"[IKF Publisher]   ⚠️  Failed to convert {skill_dir.name}: {e}")
+
+    if not converted:
+        print("[IKF Publisher] No skills converted — skipping push.")
+        return True
+
+    # Regenerate README in the ikf repo
+    _write_ikf_readme(Path(ikf_local_path), dst_skills)
+
+    # Stage, commit, push
+    repo.git.add(A=True)
+    if not repo.is_dirty(untracked_files=True):
+        print("[IKF Publisher] No changes — skipping commit/push.")
+        return True
+
+    commit_msg = f"feat(skills): add/update {', '.join(converted)}"
+    print(f"[IKF Publisher] Committing: {commit_msg}")
+    repo.index.commit(commit_msg)
+
+    try:
+        repo.remote(name="origin").push()
+        print("[IKF Publisher] ✅ Pushed to TDH-Labs/i-know-kung-fu")
+        return True
+    except Exception as e:
+        print(f"[IKF Publisher] Push failed: {e}")
+        try:
+            subprocess.run(["git", "push", "origin", "main"], cwd=ikf_local_path, check=True)
+            print("[IKF Publisher] ✅ Pushed via git CLI")
+            return True
+        except Exception as ex:
+            print(f"[IKF Publisher] git CLI push failed: {ex}")
+            return False
+
+
+def _write_ikf_readme(repo_root: Path, skills_dir: Path) -> None:
+    """Write a clean README.md for the i-know-kung-fu repo."""
+    skills = sorted([d.name for d in skills_dir.iterdir() if d.is_dir()]) if skills_dir.exists() else []
+
+    table_rows = []
+    for slug in skills:
+        skill_md_path = skills_dir / slug / "SKILL.md"
+        desc = ""
+        if skill_md_path.exists():
+            content = skill_md_path.read_text()
+            # Extract description from frontmatter
+            m = re.search(r"^description:\s*(.+)$", content, re.MULTILINE)
+            if m:
+                desc = m.group(1).strip()
+        table_rows.append(f"| [{slug}](./skills/{slug}/SKILL.md) | {desc} |")
+
+    table = "\n".join(["| Skill | Description |", "|-------|-------------|" ] + table_rows)
+
+    readme = f"""# I Know Kung Fu 🥋
+
+> *"I know kung fu." — Neo, The Matrix*
+
+AI skills distilled from expert video content, installable in any AI coding agent via the [skills CLI](https://skills.sh).
+
+## Install a skill
+
+```bash
+# Install a specific skill
+npx skills add TDH-Labs/i-know-kung-fu@<skill-name>
+
+# Browse all available skills  
+npx skills find --owner TDH-Labs
+```
+
+## Available Skills ({len(skills)} total)
+
+{table}
+
+## Supported Agents
+
+Works with Antigravity, Claude Code, Cursor, Windsurf, Copilot, Gemini CLI, and [many more](https://skills.sh).
+
+## License
+
+MIT
+"""
+    (repo_root / "README.md").write_text(readme, encoding="utf-8")
