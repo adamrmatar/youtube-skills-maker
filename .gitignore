@@ -29,3 +29,12 @@ Thumbs.db
 
 # Output (generated skills are pushed to ai-skills repo, not this repo)
 output/
+
+# Third-party local clones
+vercel-skills/
+
+# Scratch & work files
+plan.md
+research.md
+scratchpad.md
+AGENTS.md
