@@ -8,7 +8,7 @@ from typing import Dict, List
 
 
 # ---------------------------------------------------------------------------
-# Schema (kept as plain dicts for OpenRouter JSON schema mode)
+# Schema (kept as plain dicts for custom API base JSON schema mode)
 # ---------------------------------------------------------------------------
 
 SYNTH_SCHEMA = {
@@ -35,15 +35,16 @@ SYNTH_SCHEMA = {
     "required": ["name", "description", "keywords", "difficulty", "prerequisites", "skill_body", "references"],
 }
 
-OPENROUTER_BASE = "https://openrouter.ai/api/v1/chat/completions"
-
 
 # ---------------------------------------------------------------------------
-# OpenRouter call
+# General OpenAI-compatible API call
 # ---------------------------------------------------------------------------
 
-def _call_openrouter_synth(system: str, user: str, api_key: str, model: str) -> dict | None:
-    """Call OpenRouter for synthesis. Returns parsed JSON dict or None."""
+def _call_compatible_api_synth(system: str, user: str, api_key: str, api_base: str, model: str) -> dict | None:
+    """Call an OpenAI-compatible API endpoint for synthesis. Returns parsed JSON dict or None."""
+    api_base_clean = api_base.rstrip("/")
+    url = f"{api_base_clean}/chat/completions"
+
     payload = {
         "model": model,
         "messages": [
@@ -62,15 +63,20 @@ def _call_openrouter_synth(system: str, user: str, api_key: str, model: str) -> 
         "max_tokens": 8192,
     }
     data = json.dumps(payload).encode()
+    
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}",
+    }
+    # OpenRouter specific helper headers
+    if "openrouter.ai" in api_base_clean:
+        headers["HTTP-Referer"] = "https://github.com/TDH-Labs/i-know-kung-fu"
+        headers["X-Title"] = "YouTube Skills Maker"
+
     req = urllib.request.Request(
-        OPENROUTER_BASE,
+        url,
         data=data,
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {api_key}",
-            "HTTP-Referer": "https://github.com/TDH-Labs/i-know-kung-fu",
-            "X-Title": "YouTube Skills Maker",
-        },
+        headers=headers,
     )
 
     delay = 20
@@ -83,7 +89,7 @@ def _call_openrouter_synth(system: str, user: str, api_key: str, model: str) -> 
         except urllib.error.HTTPError as e:
             body_text = e.read().decode(errors="replace")
             if e.code == 429:
-                print(f"[Synthesizer] OpenRouter rate limit (429). Waiting {delay}s (attempt {attempt+1}/6)...")
+                print(f"[Synthesizer] API rate limit (429). Waiting {delay}s (attempt {attempt+1}/6)...")
                 time.sleep(delay)
                 delay = min(delay * 2, 120)
             elif e.code in (502, 503, 504):
@@ -165,7 +171,7 @@ def _call_gemini_synth(prompt: str, system: str, api_key: str, model_name: str) 
 def synthesize_skill(topic_name: str, videos: list, api_key: str, model_name: str = "gemini-2.5-flash") -> dict | None:
     """
     Synthesizes multiple video transcripts into a single agent-agnostic skill structure.
-    Uses OpenRouter (DeepSeek) as primary, Gemini as fallback.
+    Uses custom API base (OpenRouter/OpenAI compatible) as primary, Gemini as fallback.
     """
     # Build source/transcript blocks
     sources_summary = []
@@ -235,19 +241,20 @@ Output as JSON matching the SynthesizedSkill schema."""
 
     print(f"[Synthesizer] Synthesizing '{topic_name}' from {len(videos)} source(s)...")
 
-    # --- OpenRouter primary ---
-    openrouter_key = os.getenv("OPENROUTER_API_KEY", "").strip()
-    synth_model = os.getenv("SYNTH_MODEL", "deepseek/deepseek-chat")
-    if openrouter_key:
-        print(f"[Synthesizer] Using OpenRouter ({synth_model})...")
-        result = _call_openrouter_synth(system_instruction, user_prompt, openrouter_key, synth_model)
+    # --- Custom OpenAI-compatible API base primary ---
+    llm_api_key = os.getenv("LLM_API_KEY", os.getenv("OPENROUTER_API_KEY", "")).strip()
+    if llm_api_key:
+        api_base = os.getenv("LLM_API_BASE", "https://openrouter.ai/api/v1").strip()
+        synth_model = os.getenv("SYNTH_MODEL", "deepseek/deepseek-chat")
+        print(f"[Synthesizer] Using Custom API base ({synth_model}) @ {api_base}...")
+        result = _call_compatible_api_synth(system_instruction, user_prompt, llm_api_key, api_base, synth_model)
         if result:
             result = _fix_reference_links(result)
             name = result.get("name", topic_name)
             refs = len(result.get("references", []))
             print(f"[Synthesizer] ✓ Synthesized '{name}' with {refs} reference(s).")
             return result
-        print("[Synthesizer] OpenRouter synthesis failed, trying Gemini fallback...")
+        print("[Synthesizer] Primary API synthesis failed, trying Gemini fallback...")
 
     # --- Gemini fallback ---
     if api_key:
