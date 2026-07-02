@@ -37,10 +37,8 @@ class EvaluationResult(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# OpenRouter backend (OpenAI-compatible)
+# General OpenAI-compatible API backend (OpenRouter, OpenAI, etc.)
 # ---------------------------------------------------------------------------
-
-OPENROUTER_BASE = "https://openrouter.ai/api/v1/chat/completions"
 
 EVAL_SCHEMA = {
     "type": "object",
@@ -56,8 +54,11 @@ EVAL_SCHEMA = {
 }
 
 
-def _call_openrouter(system: str, user: str, api_key: str, model: str) -> dict | None:
-    """Call OpenRouter with the given model. Returns parsed JSON dict or None."""
+def _call_compatible_api(system: str, user: str, api_key: str, api_base: str, model: str) -> dict | None:
+    """Call an OpenAI-compatible API endpoint with the given model. Returns parsed JSON dict or None."""
+    api_base_clean = api_base.rstrip("/")
+    url = f"{api_base_clean}/chat/completions"
+
     payload = {
         "model": model,
         "messages": [
@@ -76,15 +77,20 @@ def _call_openrouter(system: str, user: str, api_key: str, model: str) -> dict |
         "max_tokens": 1024,
     }
     data = json.dumps(payload).encode()
+    
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}",
+    }
+    # OpenRouter specific helper headers
+    if "openrouter.ai" in api_base_clean:
+        headers["HTTP-Referer"] = "https://github.com/TDH-Labs/i-know-kung-fu"
+        headers["X-Title"] = "YouTube Skills Maker"
+
     req = urllib.request.Request(
-        OPENROUTER_BASE,
+        url,
         data=data,
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {api_key}",
-            "HTTP-Referer": "https://github.com/TDH-Labs/i-know-kung-fu",
-            "X-Title": "YouTube Skills Maker",
-        },
+        headers=headers,
     )
 
     delay = 15
@@ -109,24 +115,24 @@ def _call_openrouter(system: str, user: str, api_key: str, model: str) -> dict |
         except urllib.error.HTTPError as e:
             body_text = e.read().decode(errors="replace")
             if e.code == 429:
-                print(f"[OpenRouter] Rate limit (429). Waiting {delay}s (attempt {attempt + 1}/6)...")
+                print(f"[API] Rate limit (429). Waiting {delay}s (attempt {attempt + 1}/6)...")
                 time.sleep(delay)
                 delay = min(delay * 2, 120)
             elif e.code in (502, 503, 504):
-                print(f"[OpenRouter] Server error ({e.code}). Waiting {delay}s...")
+                print(f"[API] Server error ({e.code}). Waiting {delay}s...")
                 time.sleep(delay)
                 delay = min(delay * 2, 60)
             else:
-                print(f"[OpenRouter] HTTP {e.code}: {body_text[:300]}")
+                print(f"[API] HTTP {e.code}: {body_text[:300]}")
                 return None
         except json.JSONDecodeError as e:
-            print(f"[OpenRouter] JSON parse error: {e}")
+            print(f"[API] JSON parse error: {e}")
             return None
         except Exception as e:
-            print(f"[OpenRouter] Unexpected error: {e}")
+            print(f"[API] Unexpected error: {e}")
             return None
 
-    print("[OpenRouter] Exhausted retries.")
+    print("[API] Exhausted retries.")
     return None
 
 
@@ -187,9 +193,9 @@ def evaluate_transcript(video_id: str, title: str, transcript_text: str, api_key
     Evaluate a video transcript to determine if it contains a teachable AI skill.
 
     Priority order:
-      1. OpenRouter (DeepSeek-V3 by default) — if OPENROUTER_API_KEY is set
-      2. Gemini — if GEMINI_API_KEY is set and openrouter unavailable
-      3. Local Ollama — if LOCAL_MODEL is set to a model name (not 'none')
+      1. OpenAI-compatible custom API base (e.g. OpenRouter, OpenAI, local gateway)
+      2. Gemini (standard fallback)
+      3. Local Ollama (direct Ollama REST API)
     """
     global _evaluation_counter
     _evaluation_counter += 1
@@ -209,16 +215,18 @@ Transcript:
 {transcript_text[:80000]}
 """
 
-    # --- OpenRouter first (primary) ---
-    openrouter_key = os.getenv("OPENROUTER_API_KEY", "").strip()
-    if openrouter_key:
+    # --- OpenAI-compatible API base ---
+    llm_api_key = os.getenv("LLM_API_KEY", os.getenv("OPENROUTER_API_KEY", "")).strip()
+    if llm_api_key:
+        api_base = os.getenv("LLM_API_BASE", "https://openrouter.ai/api/v1").strip()
         model = os.getenv("EVAL_MODEL", "deepseek/deepseek-chat")
-        fallback = os.getenv("FALLBACK_MODEL", "deepseek/deepseek-chat-v3-0324")
-        print(f"[Evaluator] [{video_id}] → OpenRouter ({model})")
-        result = _call_openrouter(system, user_prompt, openrouter_key, model)
+        fallback = os.getenv("FALLBACK_MODEL", model)
+        
+        print(f"[Evaluator] [{video_id}] → Custom API ({model})")
+        result = _call_compatible_api(system, user_prompt, llm_api_key, api_base, model)
         if result is None and fallback != model:
-            print(f"[Evaluator] [{video_id}] Primary failed, trying fallback ({fallback})...")
-            result = _call_openrouter(system, user_prompt, openrouter_key, fallback)
+            print(f"[Evaluator] [{video_id}] Primary custom API model failed, trying fallback ({fallback})...")
+            result = _call_compatible_api(system, user_prompt, llm_api_key, api_base, fallback)
         if result is not None:
             print(
                 f"[Evaluator] [{video_id}] ✓ Teachable={result['is_teachable_skill']} "
@@ -241,7 +249,6 @@ Transcript:
             delay = 30
             for attempt in range(4):
                 try:
-                    from pydantic import BaseModel as PydanticBase
                     response = client.models.generate_content(
                         model=gemini_model,
                         contents=full_prompt,
