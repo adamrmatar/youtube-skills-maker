@@ -265,6 +265,69 @@
     "Es0SpwowqNk": {
       "title": "Stop Chasing Hype: The Underrated AI Tool That Actually Saves Time",
       "status": "failed_no_transcript"
+    },
+    "dgbdyxe435E": {
+      "title": "OpenClaw Tutorial",
+      "status": "synthesized",
+      "is_teachable": true,
+      "skill_potential": 4,
+      "category": "agents",
+      "evaluation": {
+        "is_teachable_skill": true,
+        "technique_description": "This skill involves setting up and configuring an OpenClaw AI agent to act as a 'digital employee' for specific automation tasks. An AI agent would need to perform the following:\n1.  **OpenClaw Setup**: Deploy OpenClaw, ideally on a Virtual Private Server (VPS) for security and ease of setup, following provider-specific instructions (e.g., Hostinger's one-click deployment).\n2.  **Initial Agent Bootstrapping**: Configure the agent's personality and baseline behavior (e.g., 'friendly AI', 'genuinely helpful without fluff') through an interactive setup process.\n3.  **Telegram Integration**: Connect OpenClaw to Telegram by creating a new bot via BotFather, obtaining an API token, and approving the pairing request within OpenClaw's interface.\n4.  **Gmail Integration**: Connect OpenClaw to a Gmail account by enabling two-factor authentication, generating an app-specific password, and providing the email and app password to OpenClaw.\n5.  **Google Drive Integration**: Connect OpenClaw to Google Drive by creating an OAuth client ID (specifically a 'desktop app' type), downloading the JSON credentials, and providing them to OpenClaw. The agent must handle the authorization flow, including copying and pasting the broken redirect URL if necessary.\n6.  **Automated Sponsorship Email Workflow**: Define a workflow to process incoming sponsorship emails:\n    *   Read emails from Gmail.\n    *   Classify emails based on content (e.g., 'EdTech' vs. 'product sponsorship').\n    *   Apply decision logic: decline EdTech offers with a polite message; for product offers, retrieve a 'media kit' PDF from a specified Google Drive folder.\n    *   Compose and send appropriate email responses, attaching the media kit when required.\n    *   Schedule this workflow as a daily cron job using OpenClaw's internal scheduling capabilities.\n7.  **Automated Meeting Scheduling Workflow**: Define a workflow to schedule meetings via natural language commands from Telegram:\n    *   Integrate Google Calendar by enabling the Calendar API and following the OAuth client ID setup similar to Google Drive.\n    *   Receive meeting requests (e.g., 'schedule a 30-minute meeting with X for Y project between 9-12').\n    *   Query Google Calendar for availability of participants within the specified timeframe.\n    *   Identify and book an available slot.\n    *   Confirm the meeting details.",
+        "skill_potential": 4,
+        "category": "agents",
+        "reasoning": "The transcript provides a detailed, step-by-step guide on setting up and configuring a specific AI agent (OpenClaw) to perform complex, multi-tool automation tasks. It covers integration with various external services (Telegram, Gmail, Google Drive, Google Calendar) and outlines concrete workflows for email management and meeting scheduling. The instructions are actionable and include specific commands and troubleshooting tips, making it highly suitable for an AI agent to learn and replicate the setup and task execution patterns. While it's specific to OpenClaw, the underlying principles of agent configuration, tool integration, and workflow automation are broadly applicable.",
+        "keywords": [
+          "OpenClaw",
+          "AI agent",
+          "automation",
+          "email management",
+          "meeting scheduling",
+          "Telegram integration",
+          "Gmail integration",
+          "Google Drive",
+          "Google Calendar",
+          "workflow automation"
+        ]
+      },
+      "synthesized_skill_name": "agents"
+    },
+    "HaWk8kAD8ZU": {
+      "title": "Why AI Agents Shouldn't Replace Your Fraud Models",
+      "status": "failed_no_transcript"
+    },
+    "jDxAtxGv3fI": {
+      "title": "Stop AI Agents From SQL Injecting Your Database",
+      "status": "failed_no_transcript"
+    },
+    "cl5Oudk3Hjo": {
+      "title": "How to Actually Use Claude Design Like a Pro (Real Use Cases)",
+      "status": "failed_no_transcript"
+    },
+    "DNqsMXH6Eog": {
+      "title": "New Skills! /handoff, /prototype, /review and /writing-* | Skills Changelog",
+      "status": "failed_no_transcript"
+    },
+    "IVGjBxqygmI": {
+      "title": "Why AI Agents Need an Operating System",
+      "status": "failed_no_transcript"
+    },
+    "NNxGQw1uQHc": {
+      "title": "The Best Way to Talk to Your Agents",
+      "status": "failed_no_transcript"
+    },
+    "UCIjt3v5rqM": {
+      "title": "How to Use Genspark Claw for Beginners (OpenClaw Made Easy)",
+      "status": "failed_no_transcript"
+    },
+    "yx0zPL07BWM": {
+      "title": "Prompt Engineering is not a job",
+      "status": "failed_no_transcript"
+    },
+    "nETfnBepL0c": {
+      "title": "Why Open Source AI Will Beat OpenAI in the Long Run",
+      "status": "failed_no_transcript"
     }
   },
   "saved_skills": {
@@ -283,6 +346,15 @@
       ],
       "metadata": {
         "category": "Generative AI",
+        "videos_count": 1
+      }
+    },
+    "agents": {
+      "video_ids": [
+        "dgbdyxe435E"
+      ],
+      "metadata": {
+        "category": "agents",
         "videos_count": 1
       }
     }
